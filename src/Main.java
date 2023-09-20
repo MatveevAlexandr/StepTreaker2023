@@ -14,10 +14,7 @@ public class Main {
             } else if (command == 2) {
               stepTracker.changeStepGoal();
             } else if (command == 3) {
-                monthData.printDaysAndStepsFromMonth();
-                System.out.println("Сумма шагов за месяц: " + monthData.sumStepsFromMonth());
-                System.out.println("Максимальное количество шагов: " + monthData.maxSteps());
-                System.out.println("Лучшая серия: " + monthData.bestSeries(stepTracker.goalByStepsPerDay));
+
             } else if (command == 0) {
                 System.out.println("Пока!");
                 return;
