@@ -4,6 +4,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         StepTracker stepTracker = new StepTracker(scanner);
+        CheckOnCorrectInput checkOnCorrectInput = new CheckOnCorrectInput();
 
         while (true) {
             printMenu();
@@ -15,9 +16,7 @@ public class Main {
             } else if (command == 3) {
                 System.out.println("Укажите месяц от 0 до 11 за который необходимо вывести статистику: ");
                 int monthForStats = scanner.nextInt();
-                    if (monthForStats < 0 || monthForStats > 11) {
-                        System.out.println("Вы ввели некорректный номер месяца");
-                    } else {
+                    if (checkOnCorrectInput.isMonthInputCorrect(monthForStats)) {
                         stepTracker.printStatistic(monthForStats);
                     }
             } else if (command == 0) {

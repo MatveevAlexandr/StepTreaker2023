@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class StepTracker {
     Scanner scanner;
+    CheckOnCorrectInput checkOnCorrectInput = new CheckOnCorrectInput();
 
     /*Добавьте поле monthToData c типом «массив объектов класса MonthData»
     и присвойте ему пустой массив с размером в 12 элементов.*/
@@ -9,46 +10,43 @@ public class StepTracker {
     Converter converter = new Converter();
     int goalByStepsPerDay = 10000;
 
+
     StepTracker(Scanner scan) {
         scanner = scan;
 
         for (int i = 0; i < monthToData.length; i++) {
             monthToData[i] = new MonthData();
-
         }
     }
-
+    // Сохранение нового количества пройденных шагов
     void addNewNumberStepsPerDay() {
         System.out.println("Введите номер месяца от 0 до 11");
         System.out.println("где 0 - январь, а 11 - декабрь");
         Scanner scanner = new Scanner(System.in);
         int numberOfMonth = scanner.nextInt();
-        if (numberOfMonth < 0 || numberOfMonth > 11) {
-            System.out.println("Вы ввели некорректный номер месяца");
-            return;
-        }
 
         System.out.println("Введите день от 1 до 30 (включительно)");
         int numberOfDay = scanner.nextInt();
-        if (numberOfDay < 0 || numberOfDay > 30) {
-            System.out.println("Вы ввели некорректный день");
-            return;
-        }
+
         System.out.println("Введите количество шагов");
         int countOfSteps = scanner.nextInt();
-        if (countOfSteps < 0 || countOfSteps > 100000) {
-            System.out.println("Вы ввели некорректное число шагов");
-            return;
+
+        if (checkOnCorrectInput.isMonthInputCorrect(numberOfMonth) && checkOnCorrectInput.isDayInputCorrect(numberOfDay) && checkOnCorrectInput.isStepsInputCorrect(countOfSteps)) {
+            MonthData monthData = monthToData[numberOfMonth];
+            monthData.days[numberOfDay] = countOfSteps;
         }
-        MonthData monthData = monthToData[numberOfMonth];
-        monthData.days[numberOfDay] = countOfSteps;
     }
+        //Изменение целевого количества шагов
     void changeStepGoal() {
         System.out.println("Введите целевое количество шагов");
         Scanner scanner = new Scanner(System.in);
-        goalByStepsPerDay = scanner.nextInt();
-        System.out.println("Целевое количество шагов записано");
+        int newGoalSteps = scanner.nextInt();
+        if (checkOnCorrectInput.isStepsInputCorrect(newGoalSteps)) {
+            goalByStepsPerDay = newGoalSteps;
+            System.out.println("Целевое количество шагов записано");
+        }
     }
+
         // Вывод статистики
     void printStatistic(int numberOfMonth) {
         monthToData[numberOfMonth].printDaysAndStepsFromMonth(); // количество пройденных шагов по дням;
